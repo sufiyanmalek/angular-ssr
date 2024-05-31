@@ -1,0 +1,31 @@
+<div class="userContainer">
+    <table>
+        <thead>
+          <tr>
+            <th (click)="sortData($event)">ID</th>
+            <th (click)="sortData($event)">Name</th>
+            <th (click)="sortData($event)">Age</th>
+            <th (click)="sortData($event)">Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(user of users; track user.id){
+              <tr>
+                  <td>
+                      {{user.id}}
+                  </td>
+                  <td>
+                      {{user.name}}
+                  </td>
+                  <td>
+                      {{user.age}}
+                  </td>
+                  <td>
+                      {{user.gender}}
+                  </td>
+              </tr>
+          }
+        </tbody>
+      </table>
+      
+</div>
