@@ -63,10 +63,55 @@ export function app(): express.Express {
 
     if (queryParams) {
       if (queryParams['_order'] !== '') {
-          if (queryParams['_order'] === 'asc') {
-            users = users.sort((user1, user2) => user1.id - user2.id);
-          } else {
-            users = users.sort((user1, user2) => user2.id - user1.id);
+          if(queryParams['_sort'] === "id"){
+            if (queryParams['_order'] === 'asc') {
+              users = users.sort((user1, user2) => user1.id - user2.id);
+            } else {
+              users = users.sort((user1, user2) => user2.id - user1.id);
+            }
+          }else if(queryParams['_sort'] === "name"){
+            if (queryParams['_order'] === 'asc') {
+              users = users.sort((a, b)=>{
+                let x = a.name.toLowerCase();
+                let y = b.name.toLowerCase();
+                if(x>y){return 1;} 
+                if(x<y){return -1;}
+                return 0;
+              })
+            }else{
+              users = users.sort((a, b)=>{
+                let x = a.name.toLowerCase();
+                let y = b.name.toLowerCase();
+                if(x>y){return -1;} 
+                if(x<y){return 1;}
+                return 0;
+              })
+            }
+            
+          }else if(queryParams['_sort'] === "age"){
+            if (queryParams['_order'] === 'asc') {
+              users = users.sort((user1, user2) => user1.age - user2.age);
+            } else {
+              users = users.sort((user1, user2) => user2.age - user1.age);
+            }
+          }else if(queryParams['_sort'] === "gender"){
+            if (queryParams['_order'] === 'asc') {
+              users = users.sort((a, b)=>{
+                let x = a.gender.toLowerCase();
+                let y = b.gender.toLowerCase();
+                if(x>y){return 1;} 
+                if(x<y){return -1;}
+                return 0;
+              })
+            }else{
+              users = users.sort((a, b)=>{
+                let x = a.gender.toLowerCase();
+                let y = b.gender.toLowerCase();
+                if(x>y){return -1;} 
+                if(x<y){return 1;}
+                return 0;
+              })
+            }
           }
       } else {
         users = users;
