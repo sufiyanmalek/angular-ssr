@@ -118,6 +118,11 @@ export function app(): express.Express {
       }
     }
 
+    if(queryParams['name_like'] && queryParams['name_like'] !== ""){
+      let searchValue = queryParams['name_like'] as string
+      users = users.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
+    }
+
     res.json({ users });
   });
   // Serve static files from /browser

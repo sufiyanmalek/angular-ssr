@@ -8,11 +8,12 @@ import {
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {FormControl, ReactiveFormsModule} from '@angular/forms'
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule,ReactiveFormsModule],
   providers: [UserService],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -25,7 +26,7 @@ export class UsersComponent implements OnInit {
     column: '',
     order: '', // asc | desc | ""
   };
-  searchValue = '';
+  searchValue = new FormControl("");
   users: any = [];
   constructor(
     private _userService: UserService,
@@ -55,7 +56,7 @@ export class UsersComponent implements OnInit {
     }
     console.log('OnInit');
     this._userService
-      .getUser(this.sorting, this.searchValue)
+      .getUser(this.sorting, this.searchValue.value)
       .subscribe((res: any) => {
         this.users = res.users;
       });
@@ -96,5 +97,9 @@ export class UsersComponent implements OnInit {
     this.getUsers();
 
     console.log('🚀 ~ UsersComponent ~ sortData ~ this.sorting:', this.sorting);
+  }
+
+  searchData(){
+    this.getUsers()
   }
 }
